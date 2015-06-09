@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import base64
 from string import maketrans,printable
 
 
@@ -11,7 +12,7 @@ class solver:
         self.level=2
         if len(sys.argv)==3:
             self.level=sys.argv[2]
-        self.result=[]
+        self.result=set()
         self.output()
         self.print_result()
     def rot13(self):
@@ -28,6 +29,15 @@ class solver:
             pass
         return r
 
+    def base32(self):
+        c=self.c
+        r=''
+        c+=((8-len(c)%8)%8)*'='
+        try:
+            r=base64.b32decode(c)
+        except:
+            pass
+        return r
     def visual_base64(self):
         c=self.c
         r=[]
@@ -91,30 +101,39 @@ class solver:
         return r
 
     def output(self):
-        ap=lambda x:self.result.append(x)
+        ap=lambda x:self.result.add(x)
         if self.level==1:
+            ap(self.base32())
             if self.base64()!='':
                 ap(self.base64())
                 return
             ap(self.rot13())
             ap(self.fence())
         elif self.level==2:
-            self.result+=self.visual_base64()
+            self.result.update(self.visual_base64())
             for i in range(26):
                 ap(self.rot(i))
             ap(self.fence())
             ap(self.morse())
+            ap(self.base32())
 
     def print_result(self):
         print 'Decode for:',self.c
-        prob_result=[]
-        for i in set(self.result):
+        prob_result=set()
+        flag_str=('flag','f1ag','fla8','f1a8')
+        for i in self.result:
             print i
-            if i.find('lag')!=-1 or i.find('FLAG')!=-1:
-                prob_result.append(i)
+            i=i.lower()
+            for flag_s in flag_str:
+                if i.find(flag_s)!=-1:
+                    prob_result.add(i)
+                    break
+            if i.find('{')!=-1 and i.find('}')!=-1:
+                prob_result.add(i)
         if len(prob_result)==0:
             return
-        print '-'*15
+        print '-'*32
+        print 'Prob:'
         for i in prob_result:
             print i
 

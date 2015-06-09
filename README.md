@@ -8,8 +8,8 @@
 ```solve.py aWhjaWFoQGdtYWlsLmNvbQ== 1```
 
 ####Feature:
-* Level=1:ROT13/BASE64/Fence(? bad translation)
-* Level=2:ROTn/BASE64(auto correct char case)/Fence/Morse Code
+* Level=1:ROT13/BASE64/Fence(? bad translation)/BASE32
+* Level=2:ROTn/BASE64(auto correct char case)/Fence/Morse Code/BASE32
 * Level=3:I haven't write it
 
 ####Other info:
