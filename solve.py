@@ -13,6 +13,7 @@ class solver:
             self.level=sys.argv[2]
         self.result=[]
         self.output()
+        self.print_result()
     def rot13(self):
         return self.c.decode('rot13')
     def rot(self,n):
@@ -26,6 +27,7 @@ class solver:
         except:
             pass
         return r
+
     def visual_base64(self):
         c=self.c
         r=[]
@@ -55,6 +57,7 @@ class solver:
                     sy.append(i+jj)
             st=sy
         return st
+
     def fence(self):
         r=''
         s1end=s2=len(self.c)-len(self.c)/2
@@ -64,6 +67,29 @@ class solver:
                 r+=self.c[s2]
                 s2+=1
         return r
+
+    def morse(self):
+        r=''
+        c=self.c.replace('−','-').replace('·','.')
+        if c.find('.')!=-1 and c.find('-')!=-1:
+            from utils import MorseTable
+            temp_stack=''
+            for pos in range(len(c)):
+                if c[pos] not in ['.','-']:
+                    if MorseTable.has_key(temp_stack):
+                        r+=MorseTable[temp_stack]
+                    else:
+                        r+=temp_stack
+                    temp_stack=''
+                    r+=c[pos]
+                else:
+                    temp_stack+=c[pos]
+            if MorseTable.has_key(temp_stack):
+                r+=MorseTable[temp_stack]
+            else:
+                r+=temp_stack
+        return r
+
     def output(self):
         ap=lambda x:self.result.append(x)
         if self.level==1:
@@ -77,7 +103,19 @@ class solver:
             for i in range(26):
                 ap(self.rot(i))
             ap(self.fence())
-        for i in self.result:
+            ap(self.morse())
+
+    def print_result(self):
+        print 'Decode for:',self.c
+        prob_result=[]
+        for i in set(self.result):
+            print i
+            if i.find('lag')!=-1 or i.find('FLAG')!=-1:
+                prob_result.append(i)
+        if len(prob_result)==0:
+            return
+        print '-'*15
+        for i in prob_result:
             print i
 
 
