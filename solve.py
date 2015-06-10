@@ -2,6 +2,7 @@
 
 import sys
 import base64
+import itertools
 from string import maketrans,printable
 
 
@@ -9,10 +10,14 @@ class solver:
     def __init__(self):
         assert len(sys.argv)>=2
         self.c=str(sys.argv[1])
+        try:
+            self.c=open(self.c,'r').read()
+        except:
+            pass
         self.level=2
         if len(sys.argv)==3:
             self.level=sys.argv[2]
-        self.result=set()
+        self.result=[]
         self.output()
         self.print_result()
     def rot13(self):
@@ -101,7 +106,7 @@ class solver:
         return r
 
     def output(self):
-        ap=lambda x:self.result.add(x)
+        ap=lambda x:self.result.append(x)
         if self.level==1:
             ap(self.base32())
             if self.base64()!='':
@@ -110,7 +115,7 @@ class solver:
             ap(self.rot13())
             ap(self.fence())
         elif self.level==2:
-            self.result.update(self.visual_base64())
+            self.result+=self.visual_base64()
             for i in range(26):
                 ap(self.rot(i))
             ap(self.fence())
@@ -121,7 +126,7 @@ class solver:
         print 'Decode for:',self.c
         prob_result=set()
         flag_str=('flag','f1ag','fla8','f1a8')
-        for i in self.result:
+        for i,k in itertools.groupby(self.result):
             print i
             i=i.lower()
             for flag_s in flag_str:

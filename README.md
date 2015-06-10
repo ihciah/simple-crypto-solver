@@ -1,11 +1,12 @@
 # simple-crypto-solver
 
 ###Usage:
-```solve.py Ciphertext Level(default=2)```
+```solve.py Ciphertext/FilePath Level(default=2)```
 
 ####Exmaples: 
-```solve.py aWhjaWFoQGdtYWlsLmNvbQ==```
-```solve.py aWhjaWFoQGdtYWlsLmNvbQ== 1```
+* ```solve.py "AWHJAWFOQGdtYWlsLmNvbQ"```
+* ```solve.py "aWhjaWFoQGdtYWlsLmNvbQ==" 1```
+* ```
 
 ####Feature:
 * Level=1:ROT13/BASE64/Fence(? bad translation)/BASE32
