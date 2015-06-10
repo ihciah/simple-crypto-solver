@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# https://github.com/ihciah/simple-crypto-solver
 
 import sys
 import base64
