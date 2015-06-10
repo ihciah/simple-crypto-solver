@@ -6,7 +6,7 @@
 ####Exmaples: 
 * ```solve.py "AWHJAWFOQGdtYWlsLmNvbQ"```
 * ```solve.py "aWhjaWFoQGdtYWlsLmNvbQ==" 1```
-* ```
+* ```solve.py "C:\Users\ihciah\Desktop\c.txt"```
 
 ####Feature:
 * Level=1:ROT13/BASE64/Fence(? bad translation)/BASE32
